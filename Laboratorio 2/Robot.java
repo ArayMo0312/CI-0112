@@ -7,9 +7,16 @@ public class Robot {
     private boolean estado;
 
 
-    public Robot(){}                    //Constructor Vacio
+    public Robot(String nombre, int ptsVida, int ptsAtk, boolean estado){
 
-//getters
+        this.nombre = nombre;
+        this.ptsVida = ptsVida;
+        this.ptsAtk = ptsAtk;
+        this.estado = estado;
+
+    }                    //Constructor 
+
+                                        //getters
     public String getNombre() {
             return nombre;
     }
@@ -23,7 +30,7 @@ public class Robot {
         return estado;
     }
 
-//Setters 
+                                        //Setters 
 
     public void setNombre(String nombre){
         this.nombre = nombre;
@@ -38,19 +45,28 @@ public class Robot {
         this.estado = estado;
     }
 
-//Metodos 
-    public void atacar(){
+//Metodos requeridos
+    public void atacar(Robot Atacante, Robot Atacado){
 
+        int vidaB = Atacado.getPtsVida(); //Tomo la vida del Robot Atacado
+
+        int atkA = Atacante.ptsAtk;     //Tomo el ataque del Robot Atacante
+
+        int vidaPostAtaque = vidaB - atkA; 
+
+        Atacado.setPtsVida(vidaPostAtaque); // se le da la vida actualizada despues de ser atacado
+
+        Atacado.estado();
     }
 
-    public void estado(int ptsVida){
+    public void estado(){
         if(ptsVida>0){
             estado = true;
-            System.out.println("EL ROBOT: " +   nombre + " SE ECUENTRA AÚN EN PIE!");
+            System.out.println("EL ROBOT: " +   nombre + " SE ECUENTRA AÚN EN PIE!"); //Si la vida es mayor que cero sigue con vida
         }
         else{
             estado = false;
-            System.out.println("EL ROBOT: " +   nombre + " CAYO EN BATALLA");
+            System.out.println("EL ROBOT: " +   nombre + " CAYO EN BATALLA"); //si non se anuncia si caida
 
         }
     }
