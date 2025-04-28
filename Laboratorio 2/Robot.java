@@ -5,16 +5,18 @@ public class Robot {
     private int ptsVida;                //Entre 50 y 100 pts de vida
     private int ptsAtk;                 //Entre 10 y 20 pts de daño
     private boolean estado;
+    private int defensa;
 
 
-    public Robot(String nombre, int ptsVida, int ptsAtk, boolean estado){
+    public Robot(String nombre, int ptsVida, int ptsAtk, boolean estado, int defensa){ //Constructor
 
         this.nombre = nombre;
         this.ptsVida = ptsVida;
         this.ptsAtk = ptsAtk;
         this.estado = estado;
+        this.defensa = defensa;
 
-    }                    //Constructor 
+    }                   
 
                                         //getters
     public String getNombre() {
@@ -28,6 +30,9 @@ public class Robot {
 }
     public boolean getEstado(){
         return estado;
+    }
+    public int getDefensa(){
+        return defensa;
     }
 
                                         //Setters 
@@ -44,14 +49,19 @@ public class Robot {
     public void setEstado(boolean estado){
         this.estado = estado;
     }
+    public void setDefensa(int defensa){
+        this.defensa = defensa;
+    }
 
 //Metodos requeridos
     public void atacar(Robot Atacado){
 
         int vida = Atacado.getPtsVida(); //Tomo la vida del Robot Atacado
+        int defensa = Atacado.getDefensa();
 
-        int atk = this.ptsAtk;     //Tomo el ataque del Robot Atacante
+        int atk = this.ptsAtk - defensa;     //Tomo el ataque del Robot Atacante
 
+        
         int vidaPostAtaque = vida - atk; 
 
         Atacado.setPtsVida(vidaPostAtaque); // se le da la vida actualizada despues de ser atacado

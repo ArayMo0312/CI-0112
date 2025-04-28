@@ -2,15 +2,15 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class JuegoBatalla {
-
-    Robot[] robots = new Robot[10];            //Arreglo de tipo robots, almacena robots
+ 
+    Robot[] robots = new Robot[10];                  //Arreglo de tipo robots, almacena robots
     private int cantidadRobots = 0;
     Scanner input = new Scanner(System.in);
 
 
     //Metodos de esta clase
     
-    private int robotsEnPie(){                  //Metodo para devolver la cantidad de robots aun con vida
+    private int robotsEnPie(){                      //Metodo para devolver la cantidad de robots aun con vida
             int vivos = 0;
 
             for(int i = 0; i < cantidadRobots; i++){
@@ -68,12 +68,23 @@ public class JuegoBatalla {
             }
             input.nextLine();
 
-            System.out.println("Nuevo Robot creado con exito");
-            System.out.println();
-            System.out.println("Nombre: " + nombre + " | HP: " + ptsVida + " | ATK: " + ptsAtk);
+            System.out.println("Puntos de defensa del robot (Min:0 | Max:10):");
             System.out.println();
 
-            Robot robot = new Robot(nombre, ptsVida, ptsAtk, true); //Crear el Robot con los atributos dados por el usuario
+            int defensa = input.nextInt();
+
+            while(defensa < 0 || defensa > 10){              //Se asegura de que se encuentre en el rango especificado
+                System.out.println("El valor seleccionado se encuentra fuera de los parametros, intente nuevamente: ");
+                defensa = input.nextInt();
+            }
+            input.nextLine();
+
+            System.out.println("Nuevo Robot creado con exito");
+            System.out.println();
+            System.out.println("Nombre: " + nombre + " | HP: " + ptsVida + " | ATK: " + ptsAtk + " | DEF: " + defensa);
+            System.out.println();
+
+            Robot robot = new Robot(nombre, ptsVida, ptsAtk, true, defensa); //Crear el Robot con los atributos dados por el usuario
             
             robots[cantidadRobots] = robot;                                //Agragarlo al arreglo
             
@@ -86,7 +97,7 @@ public class JuegoBatalla {
         System.out.println();                                               
 
         for(int i = 0; i < cantidadRobots; i++){
-            System.out.println("Robot " + i+1 + "| Nombre: " + robots[i].getNombre() + "| HP: " + robots[i].getPtsVida() + "| ATK: " + robots[i].getPtsAtk());
+            System.out.println("Robot " + i+1 + "| Nombre: " + robots[i].getNombre() + "| HP: " + robots[i].getPtsVida() + "| ATK: " + robots[i].getPtsAtk() + "| DEF: " + robots[i].getDefensa());
             System.out.println();
         }
     }
@@ -117,16 +128,31 @@ public class JuegoBatalla {
             atacado.estado();
 
             System.out.println("--------------Enter para continuar-------------"); //una pausa antes del siguiente ataque
+            System.out.println("----------(1.Ver estado de los robots)---------"); //o da la opcion de ver el estado de los robots
+
+            String respuesta = input.nextLine();
+
+            if(respuesta.equals("1")){                                      //Pausa para mostrar el estado de los robots
+                mostrarRobots();
+
+            System.out.println("--------------Enter para continuar-------------");
 
             input.nextLine();
+            }
+            
             
         }
 
         ganador();
 
+        System.out.println();
+        System.out.println();
+        reiniciarJuego();
+
+
     }
 
-    public void ganador(){                                                  //Recorre el arreglo robots buscando al que aun Tenga estado True
+    public void ganador(){                                                             //Recorre el arreglo robots buscando al que aun Tenga estado True
         
         for(int i = 0; i < cantidadRobots; i ++){
 
@@ -135,8 +161,18 @@ public class JuegoBatalla {
                 System.out.println("===================================================================");
                 System.out.println("El Ganador de la batalla es " + robots[i].getNombre() + "!!!!!!");
                 System.out.println("===================================================================");
+                System.out.println();
             }
         }
 
+    }
+
+    public void reiniciarJuego(){                                                    //Despues decada juego se reincia elarreglo para poder volver a jugar
+        for(int i = 0; i < robots.length; i++){                                      //recorre el arreglo y lo reinicia
+            robots[i] = null;
+        }
+        cantidadRobots = 0;
+        System.out.println("El juego ha sido reiniciado, puedes crear nuevos robots ahora");
+        System.out.println();
     }
 }
