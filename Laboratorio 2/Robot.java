@@ -23,7 +23,7 @@ public class Robot {
     public int getPtsVida() {
         return ptsVida;
 }
-    public int getAtk() {
+    public int getPtsAtk() {
         return ptsAtk;
 }
     public boolean getEstado(){
@@ -46,17 +46,16 @@ public class Robot {
     }
 
 //Metodos requeridos
-    public void atacar(Robot Atacante, Robot Atacado){
+    public void atacar(Robot Atacado){
 
-        int vidaB = Atacado.getPtsVida(); //Tomo la vida del Robot Atacado
+        int vida = Atacado.getPtsVida(); //Tomo la vida del Robot Atacado
 
-        int atkA = Atacante.ptsAtk;     //Tomo el ataque del Robot Atacante
+        int atk = this.ptsAtk;     //Tomo el ataque del Robot Atacante
 
-        int vidaPostAtaque = vidaB - atkA; 
+        int vidaPostAtaque = vida - atk; 
 
         Atacado.setPtsVida(vidaPostAtaque); // se le da la vida actualizada despues de ser atacado
 
-        Atacado.estado();
     }
 
     public void estado(){
